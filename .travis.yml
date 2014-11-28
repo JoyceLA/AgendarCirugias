@@ -4,7 +4,7 @@ php:
   - 5.3
 before_script: ./before_script.sh
 script: "php run-phpunit.php"
-git submodule init
+
 cd TestSelenium
 python -m SimpleHTTPServer 8080 > /dev/null 2>&1 &
 cd ..
