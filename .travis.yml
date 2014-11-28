@@ -9,16 +9,6 @@ php:
 env:
   - DB=mysql 
   
-addons:
-  sauce_connect:
-    username: "JoyceLA"
-    access_key: "An29Se6Jo93"
-    
-  username = os.environ["JoyceLA"]
-  access_key = os.environ["An29Se6Jo93"]
-  capabilities["tunnel-identifier"] = os.environ["TRAVIS_JOB_NUMBER"]
-  hub_url = "%s:%s@localhost:4445" % (username, access_key)
-  driver = webdriver.Remote(desired_capabilities=capabilities, command_executor="http://%s/wd/hub" % hub_url)
   
 before_script: 
  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS agenda;'; fi"
