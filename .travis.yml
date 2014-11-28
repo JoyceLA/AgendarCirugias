@@ -12,8 +12,11 @@ env:
   
 before_script: 
  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database IF NOT EXISTS agenda;'; fi"
- - sh -e /etc/init.d/xvfb start
- - export DISPLAY=:99.0
- - wget http://selenium.googlecode.com/files/selenium-server-standalone-2.15.0.jar
- - java -jar selenium-server-standalone-2.15.0.jar > /dev/null 2>&1 &
- - sleep 30  # to wait for Selenium to be up and running
+ - "export DISPLAY=:99.0"
+ - "sh -e /etc/init.d/xvfb start"
+ - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.31.0.jar"
+ - php -S localhost:8000 -t public/ &
+
+script:
+  - "java -jar selenium-server-standalone-2.31.0.jar -htmlSuite *firefox http://localhost:8000/ /home/travis/build/JoyceLA/AgendarCirugias/TestSelenium/PruebaCrearCuenta.php ./result"
+  - "php -r 'echo strip_tags(file_get_contents(\"result\"));'"
